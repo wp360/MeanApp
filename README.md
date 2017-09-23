@@ -12,6 +12,10 @@ module.exports = {
     "secretKey": "你的密钥"
 }
 ```
+4. 显示页面
+> 新建public > views > index.html
+
+## 以上为初始页面，接下来会新建git 分支。相关后续内容详见dev v1.0。
 
 ## 【知识点】
 
