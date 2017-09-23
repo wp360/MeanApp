@@ -1,17 +1,17 @@
 ## 【git操作】
-```html
-<h2>git 分支</h2>
-<div>
-    <h3>创建分支<h3>
-    <p><strong>git branch dev</strong> 创建一个分支</p>
-    <p>直接输入git branch，不加任何后续参数，就表示让git列出所有已存在的分支。<br />
-    前面带“星号”的分支表示当前所在的分支。<br />切换分支到dev: <strong>git checkout dev</strong>
-    </p>
-    <p><strong>git commit -a</strong>在分支上提交工作</p>
-</div>
-<h2>git 打标签</h2>
-<p>git tag -a v1.0 -m "1.0版本" 或者 git tag v1.0-light</p>
-<a href="https://git-scm.com/book/zh/v2" alt="git版本控制文档V2.0">git版本控制文档V2.0</a>
+```javascript
+git 分支：
+1. 创建分支
+git branch dev 创建一个分支
+直接输入git branch，不加任何后续参数，就表示让git列出所有已存在的分支。
+前面带“星号”的分支表示当前所在的分支。
+切换分支到dev: git checkout dev
+
+git commit -a 在分支上提交工作
+
+2. git 打标签
+git tag -a v1.0 -m "1.0版本" 或者 git tag v1.0-light
+git版本控制文档V2.0  链接： https://git-scm.com/book/zh/v2
 ```
 ## 【云数据库MLab】
 [云数据库](https://mlab.com)
