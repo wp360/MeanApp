@@ -1,3 +1,39 @@
+## 【操作步骤】
+1. `npm init`
+2. `npm install express body-parser morgan --save`
+3. 开启服务
+```js
+// server.js
+var express = require('express');
+var bodyParser = require('body-parser');
+var morgan = require('morgan');
+
+var app = express();
+app.listen(3000,function(err){
+    if(err){
+        console.log(err);
+    }else{
+        console.log('监听端口3000');
+    }
+});
+```
+4. config.js设置
+```js
+module.exports = {
+    "database": "数据库地址",
+    "port": process.env.PORT || 3000,
+    "secretKey": "你的密钥"
+}
+```
+5. 导入参数
+```js
+// server.js
+var config = require('./config');
+
+app.listen(config.port,function(err){
+    // ...省略
+}
+```
 ## 【git操作】
 ```javascript
 git 分支：
@@ -45,11 +81,51 @@ mongodb://<dbuser>:<dbpassword>@ds141175.mlab.com:41175/userstory
 
 [使用bcrypt进行加密的简单实现](http://www.cnblogs.com/wx1993/p/5250275.html)
 
-4. Api生成
+[基于Mongoose和bcrypt的密码验证](http://www.html-js.com/article/1522)
 
+### hash密码校验原理
+> 虽然对同一个密码，每次生成的hash不一样，但是hash中包含了salt（hash产生过程：先随机生成salt，salt跟password进行hash）；在下次校验时，从hash中取出salt，salt跟password进行hash；得到的结果跟保存在DB中的hash进行比对，compareSync中已经实现了这一过程：bcrypt.compareSync(password, hashFromDB)
+
+4. Api生成
+```js
+// routes >> api.js
+var User = require('../models/user');
+var config = require('../../config');
+var secretKey = config.secretKey;
+
+module.exports = function(app,express){
+    var api = express.Router();
+    api.post('/signup',function(req,res){
+        var user = new User({
+            name: req.body.name,
+            username: req.body.username,
+            password: req.body.password
+        });
+        user.save(function(err){
+            if(err){
+                res.send(err);
+                return;
+            }
+            res.json({message:'用户已经生成！'});
+        });
+    });
+}
+
+// server.js 加载解析api
+var api = require('./app/routes/api')(app,express);
+app.use('/api',api);
+```
 5. Postman使用
 
 6. token
 `npm install jsonwebtoken --save`
 
 [使用json web token](http://www.haomou.net/2014/08/13/2014_web_token/)
+
+[八幅漫画理解使用JSON Web Token设计单点登录系统](http://blog.leapoahead.com/2015/09/07/user-authentication-with-jwt/)
+
+[Node.js+Mongoose的RestfulApi的用户token权限验证](https://github.com/Nicksapp/nAuth-restful-api)
+
+## 备注：
+> model.pre 可以是具体业务逻辑的一些数据验证,或者原始数据转换
+> schema.pre 跟业务无关的数据操作

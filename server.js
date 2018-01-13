@@ -5,7 +5,8 @@ var config = require('./config');
 var mongoose = require('mongoose');
 
 var app = express();
-
+// 警告DeprecationWarning: Mongoose: mpromise解决 
+mongoose.Promise = global.Promise;
 //mongoose.connect() 版本更新 http://mongoosejs.com/docs/connections.html#use-mongo-client
 mongoose.connection.openUri(config.database,function(err){
     if(err){
@@ -25,6 +26,7 @@ app.use(morgan('dev'));
 var api = require('./app/routes/api')(app,express);
 app.use('/api',api);
 
+// express路由
 app.get('*', function(req,res){
     res.sendFile(__dirname + '/public/views/index.html');
 });

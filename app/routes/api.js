@@ -18,6 +18,7 @@ function createToken(user){
 
 module.exports = function(app,express){
     var api = express.Router();
+    // 注册
     api.post('/signup',function(req,res){
         var user = new User({
             name: req.body.name,
@@ -32,7 +33,7 @@ module.exports = function(app,express){
             res.json({message:'用户已经生成！'});
         });
     });
-
+    // 获取全部用户信息
     api.get('/users',function(req,res){
         User.find({},function(err,users){
             if(err){
@@ -42,7 +43,7 @@ module.exports = function(app,express){
             res.json(users);
         });
     });
-
+    // 登录
     api.post('/login',function(req,res) {
         User.findOne({
             username: req.body.username
